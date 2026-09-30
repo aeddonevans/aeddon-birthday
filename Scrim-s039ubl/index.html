@@ -1,0 +1,137 @@
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400..700;1,400..700&family=Limelight&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div id="header">
+            <h1 class="limelight">CELEBRATING</h1>
+            <div id="card">
+                <img id="bff-img" src="images/aeddon.jpg">
+                <div id="card-detail">
+                    <h2 id="bday-name">Aeddon Evans</h2>
+                    <h4 class="bday-detail">2004-12-17</h4>
+                    <h4 class="bday-detail">22-years-old</h4>
+                </div>
+            </div>
+        </div>
+        
+        <div id="gift-wrapper">
+            <div class="gift-section">
+                <h2 class="gift-title">What got you a couple things..!</h2>\
+                </br>
+                <h3 class="gift-hint">(Click the gift)</h3>
+                <div
+                    class="gift-img"
+                    data-open-image="images/gift-creature.gif"
+                    role="button"
+                    tabindex="0"
+                ></div>
+            </div>
+            
+            <div class="gift-section">
+                <h2 class="gift-title">If you liked that, you'll love this!</h2>
+                <div
+                    class="gift-img"
+                    data-open-image="images/gift-other-creature.gif"
+                    role="button"
+                    tabindex="0"
+                ></div>
+            </div>
+            
+            <div class="gift-section">
+                <h2 class="gift-title">Does she look familiar..?</h2>
+                <div
+                    class="gift-img"
+                    data-open-image="images/gift-dbd-player.gif"
+                    role="button"
+                    tabindex="0"
+                ></div>
+            </div>
+            
+            <div class="gift-section">
+                <h2 class="gift-title">Oh look, there's john handsome!</h2>
+                <div
+                    class="gift-img"
+                    data-open-image="images/gift-handsome.gif"
+                    role="button"
+                    tabindex="0"
+                ></div>
+            </div>
+            
+            <div class="gift-section">
+                <h2 class="gift-title">Truly one of the trips of all time!</h2>
+                <div
+                    class="gift-img"
+                    data-open-image="images/gift-patrick.gif"
+                    role="button"
+                    tabindex="0"
+                ></div>
+            </div>
+        </div>
+        <p id="footer">Want to create your own Birthday GIFt site? Take <a href="https://scrimba.com/learn/htmlandcss" target="_blank">this HTML & CSS course.</a></p>
+        
+        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+        
+        <script>
+            const gifts = document.querySelectorAll(".gift-img");
+            
+            // Assign "open gift" click behavior
+            gifts.forEach(function (gift) {
+                gift.addEventListener("click", openGift);
+                
+                // Keyboard controls
+                gift.addEventListener("keydown", function (event) {
+                    if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        openGift.call(gift);
+                    }
+                });
+            });
+            
+            function openGift() {
+                const gift = this;
+                
+                // Prevent gift from opening again
+                if (gift.classList.contains("opened")) {
+                    return;
+                }
+                
+                gift.classList.add("opened", "shaking");
+                
+                // Remove shaking after 600ms
+                setTimeout(function () {
+                    gift.classList.remove("shaking");
+                    
+                    // Switch permanently to predefined GIF
+                    gift.style.backgroundImage = 
+                        `url("${gift.dataset.openImage}")`;
+                    
+                    launchConfetti(gift);
+                }, 600)   
+            }
+            
+            function launchConfetti(gift) {
+                const box = gift.getBoundingClientRect();
+
+                const centerX =
+                    (box.left + box.width / 2) / window.innerWidth;
+
+                const centerY =
+                    (box.top + box.height / 2) / window.innerHeight;
+
+                confetti({
+                    particleCount: 150,
+                    spread: 90,
+                    startVelocity: 45,
+                    origin: {
+                        x: centerX,
+                        y: centerY
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>
